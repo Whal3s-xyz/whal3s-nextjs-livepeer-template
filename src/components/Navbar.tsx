@@ -1,17 +1,15 @@
 import React, {Fragment} from 'react';
 import {Disclosure, Menu, Transition} from "@headlessui/react";
-import {Bars3Icon, BellIcon, XMarkIcon} from "@heroicons/react/24/outline";
+import {Bars3Icon, XMarkIcon} from "@heroicons/react/24/outline";
 import Image from "next/image";
 
 import VitalikImage from '@/resources/images/vitalik-square.jpeg'
-import useUser from "@/lib/useUser";
 import fetchJson from "@/lib/fetchJson";
 import Router, {useRouter} from "next/router";
+import * as blockies from 'blockies-ts';
+import {withIronSessionSsr} from "iron-session/next";
+import {sessionOptions} from "@/lib/session";
 
-const user = {
-    name: 'Tom Cook',
-    email: 'tom@example.com',
-}
 const navigation = [
     {name: 'Login', href: '/'},
     {name: 'Gated', href: '/gated/video'},
@@ -22,11 +20,11 @@ function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
+// @ts-ignore
 const Navbar = () => {
+
     const router = useRouter();
-
-
-
+    const imgSrc = VitalikImage;
     const logout = async () => {
 
         await fetchJson("/api/logout", {
@@ -47,13 +45,13 @@ const Navbar = () => {
                                 <div className="flex flex-shrink-0 items-center">
                                     <img
                                         className="block h-8 w-auto lg:hidden"
-                                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                                        alt="Your Company"
+                                        src="https://whal3s-assets.s3.eu-central-1.amazonaws.com/logos/Whal3s_black.png"
+                                        alt="Whal3s"
                                     />
                                     <img
                                         className="hidden h-8 w-auto lg:block"
-                                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                                        alt="Your Company"
+                                        src="https://whal3s-assets.s3.eu-central-1.amazonaws.com/logos/Whal3s_black.png"
+                                        alt="Whal3s"
                                     />
                                 </div>
                                 <div className="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
@@ -75,13 +73,6 @@ const Navbar = () => {
                                 </div>
                             </div>
                             <div className="hidden sm:ml-6 sm:flex sm:items-center">
-                                <button
-                                    type="button"
-                                    className="rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                                >
-                                    <span className="sr-only">View notifications</span>
-                                    <BellIcon className="h-6 w-6" aria-hidden="true"/>
-                                </button>
 
                                 {/* Profile dropdown */}
                                 <Menu as="div" className="relative ml-3">
@@ -89,7 +80,7 @@ const Navbar = () => {
                                         <Menu.Button
                                             className="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                             <span className="sr-only">Open user menu</span>
-                                            <Image className="h-8 w-8 rounded-full" src={VitalikImage}
+                                            <Image className="h-8 w-8 rounded-full" src={imgSrc}
                                                    alt={"profile picture"}/>
                                         </Menu.Button>
                                     </div>
@@ -159,19 +150,12 @@ const Navbar = () => {
                         <div className="border-t border-gray-200 pt-4 pb-3">
                             <div className="flex items-center px-4">
                                 <div className="flex-shrink-0">
-                                    <Image className="h-10 w-10 rounded-full" src={VitalikImage} alt=""/>
+                                    <Image className="h-10 w-10 rounded-full" src={imgSrc} alt=""/>
                                 </div>
                                 <div className="ml-3">
-                                    <div className="text-base font-medium text-gray-800">{user.name}</div>
-                                    <div className="text-sm font-medium text-gray-500">{user.email}</div>
+                                    {/*<div className="text-base font-medium text-gray-800">{user.name}</div>*/}
+                                    {/*<div className="text-sm font-medium text-gray-500">{user.email}</div>*/}
                                 </div>
-                                <button
-                                    type="button"
-                                    className="ml-auto flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                                >
-                                    <span className="sr-only">View notifications</span>
-                                    <BellIcon className="h-6 w-6" aria-hidden="true"/>
-                                </button>
                             </div>
                             <div className="mt-3 space-y-1">
                                 <Disclosure.Button
@@ -192,3 +176,16 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+export const getServerSideProps = withIronSessionSsr(
+    async function getServerSideProps({ req }) {
+        console.log('serversideprops layout')
+        console.log('user', req?.session?.user ?? null,)
+        return {
+            props: {
+                user: req?.session?.user ?? null,
+            },
+        };
+    },
+    sessionOptions
+);
