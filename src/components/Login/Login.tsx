@@ -6,6 +6,7 @@ import ConnectWallet from "@/components/Login/ConnectWallet";
 import SignMessage from "@/components/Login/SignMessage";
 import fetchJson from "@/lib/fetchJson";
 import useUser from "@/lib/useUser";
+import notify from "@/utils/notify";
 
 const Login = () => {
 
@@ -50,18 +51,24 @@ const Login = () => {
     // @ts-ignore
     const login = async (utility) => {
         setLoading(true)
-        await mutateUser(
-            await fetchJson("/api/login", {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({
-                    signature: utility?.signature,
-                    walletAddress: utility?.wallet?.address,
+        try {
+            await mutateUser(
+                await fetchJson("/api/login", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({
+                        signature: utility?.signature,
+                        walletAddress: utility?.wallet?.address,
 
+                    }),
                 }),
-            }),
-            false,
-        );
+                false,
+            );
+        } catch (e:any) {
+            console.log('error', e)
+            notify(e.message)
+        }
+
         setLoading(false)
     }
 
