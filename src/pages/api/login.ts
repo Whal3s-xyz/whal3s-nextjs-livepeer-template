@@ -1,8 +1,7 @@
-// pages/api/login.ts
+// pages/api/login.ts:
 const CryptoJS = require("crypto-js");
 import {withIronSessionApiRoute} from "iron-session/next";
 import {sessionOptions} from "@/lib/session";
-import fetchJson, {FetchError} from "@/lib/fetchJson";
 
 export default withIronSessionApiRoute(
     async function loginRoute(req, res) {

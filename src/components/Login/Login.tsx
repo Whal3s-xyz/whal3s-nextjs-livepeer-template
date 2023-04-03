@@ -17,7 +17,7 @@ const Login = () => {
 
     const [utility, setUtility] = useState<NftValidationUtility | undefined>(undefined);
 
-    const [step, setStep] = useState<number | undefined>(undefined);
+    const [step, setStep] = useState<number>(0);
 
 
     const [loading, setLoading] = useState(false);
@@ -35,7 +35,8 @@ const Login = () => {
             }
         });
         const _utility = await whal3s.createValidationUtility(process.env.whal3sUtilityId ?? '')
-        _utility.addEventListener('stepChanged', () => {
+        _utility.addEventListener('stepChanged', (event) => {
+            console.log((event as CustomEvent).detail)
             console.log('step', _utility.step)
             setUtility(_utility)
             setStep(_utility.step)
@@ -81,8 +82,7 @@ const Login = () => {
         <div>
             {step === NftValidationUtility.STEP_UNINITIALIZED && <Uninitialized/>}
             {step === NftValidationUtility.STEP_INITIALIZED && <ConnectWallet utility={utility}/>}
-            {(step === NftValidationUtility.STEP_WALLET_CONNECTED || step === NftValidationUtility.STEP_NFTS_FETCHED) && !utility?.signature &&
-                <SignMessage utility={utility}/>}
+            {step >= NftValidationUtility.STEP_WALLET_CONNECTED && !utility?.signature && <SignMessage utility={utility}/>}
             {utility?.signature && <Button onClick={login} disabled={loading}
                                            isLoading={loading}>{loading ? 'Logging in' : 'Log in'}</Button>}
         </div>

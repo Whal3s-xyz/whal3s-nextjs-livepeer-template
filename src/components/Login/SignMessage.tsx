@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import Button from "../Button";
 import notify from "../../utils/notify";
-import {NftValidationUtility} from "@whal3s/whal3s.js";
 
 // @ts-ignore
 const SignMessage = ({utility}) => {
