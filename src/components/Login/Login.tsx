@@ -7,6 +7,7 @@ import SignMessage from "@/components/Login/SignMessage";
 import fetchJson from "@/lib/fetchJson";
 import useUser from "@/lib/useUser";
 import notify from "@/utils/notify";
+import toast from "react-hot-toast";
 
 const Login = () => {
 
@@ -53,7 +54,7 @@ const Login = () => {
     const login = async (utility) => {
         setLoading(true)
         try {
-            await mutateUser(
+            const response = await mutateUser(
                 await fetchJson("/api/login", {
                     method: "POST",
                     headers: {"Content-Type": "application/json"},
@@ -65,9 +66,12 @@ const Login = () => {
                 }),
                 false,
             );
+            if(!response?.isLoggedIn)
+                notify('Error', 'Login failed, Wallet not eligible')
+
+
         } catch (e:any) {
-            console.log('error', e)
-            notify(e.message)
+            notify(e.message, 'Wallet not eligible')
         }
 
         setLoading(false)

@@ -42,7 +42,7 @@ const Navbar = () => {
                     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                         <div className="flex h-16 justify-between">
                             <div className="flex">
-                                <div className="flex flex-shrink-0 items-center">
+                                <a className="flex flex-shrink-0 items-center" href={'/'}>
                                     <img
                                         className="block h-8 w-auto lg:hidden"
                                         src="https://whal3s-assets.s3.eu-central-1.amazonaws.com/logos/Whal3s_black.png"
@@ -53,7 +53,7 @@ const Navbar = () => {
                                         src="https://whal3s-assets.s3.eu-central-1.amazonaws.com/logos/Whal3s_black.png"
                                         alt="Whal3s"
                                     />
-                                </div>
+                                </a>
                                 <div className="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
                                     {navigation.map((item) => (
                                         <a
@@ -61,7 +61,7 @@ const Navbar = () => {
                                             href={item.href}
                                             className={classNames(
                                                 router.pathname === item.href
-                                                    ? 'border-indigo-500 text-gray-900'
+                                                    ? 'border-whal3s-500 text-gray-900'
                                                     : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700',
                                                 'inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium'
                                             )}
@@ -78,7 +78,7 @@ const Navbar = () => {
                                 <Menu as="div" className="relative ml-3">
                                     <div>
                                         <Menu.Button
-                                            className="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                            className="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-whal3s-500 focus:ring-offset-2">
                                             <span className="sr-only">Open user menu</span>
                                             <Image className="h-8 w-8 rounded-full" src={imgSrc}
                                                    alt={"profile picture"}/>
@@ -116,7 +116,7 @@ const Navbar = () => {
                             <div className="-mr-2 flex items-center sm:hidden">
                                 {/* Mobile menu button */}
                                 <Disclosure.Button
-                                    className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                    className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-whal3s-500 focus:ring-offset-2">
                                     <span className="sr-only">Open main menu</span>
                                     {open ? (
                                         <XMarkIcon className="block h-6 w-6" aria-hidden="true"/>
@@ -137,7 +137,7 @@ const Navbar = () => {
                                     href={item.href}
                                     className={classNames(
                                         router.pathname === item.href
-                                            ? 'border-indigo-500 bg-indigo-50 text-indigo-700'
+                                            ? 'border-whal3s-500 bg-whal3s-50 text-whal3s-700'
                                             : 'border-transparent text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800',
                                         'block border-l-4 py-2 pl-3 pr-4 text-base font-medium'
                                     )}
@@ -176,16 +176,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-export const getServerSideProps = withIronSessionSsr(
-    async function getServerSideProps({ req }) {
-        console.log('serversideprops layout')
-        console.log('user', req?.session?.user ?? null,)
-        return {
-            props: {
-                user: req?.session?.user ?? null,
-            },
-        };
-    },
-    sessionOptions
-);
