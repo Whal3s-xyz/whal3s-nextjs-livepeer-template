@@ -8,7 +8,7 @@ const Video = ({user}) => {
     return (
       <Layout header="Gated video">
           <p>https://playback.livepeer.studio/asset/hls/f9f96eryysmjdbnk/index.m3u8?accessKey={user.accessToken}</p>
-          <video src={`https://playback.livepeer.studio/asset/hls/f9f96eryysmjdbnk/index.m3u8?accessKey==${user.accessToken}`} controls className="w-full"/>
+          <video src={`https://playback.livepeer.studio/asset/hls/f9f96eryysmjdbnk/index.m3u8?accessKey=${user.accessToken}`} controls className="w-full"/>
       </Layout>
     );
 };
