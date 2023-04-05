@@ -1,11 +1,7 @@
 import React from 'react';
-import DynamicLogin from "@/components/Login/DynamicLogin";
 import Navbar from "@/components/Navbar";
-import {withIronSessionSsr} from "iron-session/next";
-import {sessionOptions} from "@/lib/session";
 
-// @ts-ignore
-const Layout = (props) => {
+const Layout = (props:any) => {
     return (
         <div className="min-h-full">
             <Navbar/>

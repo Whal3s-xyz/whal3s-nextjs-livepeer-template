@@ -1,9 +1,12 @@
 import React, {useState} from 'react';
 import Button from "../Button";
 import notify from "../../utils/notify";
+import {NftValidationUtility} from "@whal3s/whal3s.js";
 
-// @ts-ignore
-const SignMessage = ({utility}) => {
+type Props = {
+    utility: NftValidationUtility
+}
+const SignMessageButton = ({utility}: Props) => {
     const [loading, setLoading] = useState(false);
     const sign = () => {
         setLoading(true)
@@ -27,4 +30,4 @@ const SignMessage = ({utility}) => {
     );
 };
 
-export default SignMessage;
+export default SignMessageButton;

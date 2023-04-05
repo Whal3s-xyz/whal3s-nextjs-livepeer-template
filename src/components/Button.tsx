@@ -1,8 +1,14 @@
 import React from 'react';
 import {ImSpinner2} from "react-icons/im";
 
-// @ts-ignore
-const Button = ({onClick, children, className = '', disabled = false, isLoading = false}) => {
+type Props = {
+    onClick?: React.MouseEventHandler<HTMLButtonElement>,
+    className?: string,
+    children: React.ReactNode,
+    disabled?: boolean,
+    isLoading?: boolean
+}
+const Button = ({onClick, children, className = '', disabled = false, isLoading = false} : Props) => {
     if (isLoading)
         disabled = true;
     return (

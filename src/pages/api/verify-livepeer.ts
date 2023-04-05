@@ -6,7 +6,7 @@ export default async function handler(
     res: NextApiResponse
 ) {
     try {
-        const {accessKey, webhookContext} = req.body;
+        const {accessKey} = req.body;
         const walletAddress = CryptoJS.AES.decrypt(accessKey, process.env.ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8);
         const utilityId = process.env.WHAL3S_UTILITY_ID;
 

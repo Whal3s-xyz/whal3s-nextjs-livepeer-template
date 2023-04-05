@@ -1,9 +1,12 @@
 import React, {useState} from 'react';
 import Button from "../Button";
 import notify from "../../utils/notify";
+import {NftValidationUtility} from "@whal3s/whal3s.js";
 
-// @ts-ignore
-const ConnectWallet = ({utility}) => {
+type Props = {
+    utility: NftValidationUtility
+}
+const ConnectWalletButton = ({utility}: Props) => {
     const [loading, setLoading] = useState(false);
     const connectWallet = () => {
         setLoading(true)
@@ -15,6 +18,7 @@ const ConnectWallet = ({utility}) => {
                 setLoading(false)
             })
     }
+
     return (
         <Button
             isLoading={loading}
@@ -25,4 +29,4 @@ const ConnectWallet = ({utility}) => {
     );
 };
 
-export default ConnectWallet;
+export default ConnectWalletButton;
